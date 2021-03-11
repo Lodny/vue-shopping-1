@@ -1,0 +1,19 @@
+<template>
+  <div class="filter">
+    Filters
+  </div>
+</template>
+
+<style scoped>
+.filter {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  margin: 1rem;
+  border-bottom: 0.1rem #c0c0c0 solid;
+}
+
+.filter div {
+  flex: 1;
+}
+</style>
