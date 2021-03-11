@@ -10,7 +10,7 @@
           <Products :products="filtered" />
         </div>
         <div class="sidebar">
-          sidebar
+          <Cart />
         </div>
       </div>
     </main>
@@ -21,9 +21,15 @@
 <script>
 import Filters from "@/components/Filters";
 import Products from "@/components/Products";
+import Cart from "@/components/Cart";
 import data from "../../data.json";
 
 export default {
+  components: {
+    Filters,
+    Products,
+    Cart
+  },
   data() {
     return {
       products: data.products,
@@ -31,10 +37,6 @@ export default {
       order: "Latest",
       size: "All"
     };
-  },
-  components: {
-    Filters,
-    Products
   },
   computed: {
     productsCount() {
