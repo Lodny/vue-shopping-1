@@ -1,8 +1,49 @@
 <template>
   <div class="filter">
-    Filters
+    <div>{{ productsCount }} Products</div>
+    <div>
+      Order
+      <select @change="changeOrder">
+        <option v-for="order in orders" :key="order">{{ order }} </option>
+      </select>
+    </div>
+    <div>
+      Filter
+      <select @change="changeSize">
+        <option v-for="size in sizes" :key="size" :value="size">{{ size }} </option>
+      </select>
+    </div>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    productsCount: {
+      type: Number,
+      require: true,
+    },
+  },
+  data() {
+    return {
+      orders: ["Latest", "Lowest", "Highest"],
+      sizes: ["All", "XS", "S", "M", "L", "XL", "XXL"],
+    };
+  },
+  methods: {
+    changeOrder(e) {
+      console.log("Filter ; methods : changeOrder() : ", e);
+      console.log("Filter ; methods : changeOrder() : ", e.target.value);
+      this.$emit("changeOrder", e.target.value);
+    },
+    changeSize(e) {
+      console.log("Filter ; methods : changeSize() : ", e);
+      console.log("Filter ; methods : changeSize() : ", e.target.value);
+      this.$emit("changeSize", e.target.value);
+    },
+  },
+};
+</script>
 
 <style scoped>
 .filter {
