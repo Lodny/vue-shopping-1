@@ -29,27 +29,37 @@ export default {
       products: data.products,
       filtered: data.products,
       order: "Latest",
-      size: "All",
+      size: "All"
     };
   },
   components: {
     Filters,
-    Products,
+    Products
   },
   computed: {
     productsCount() {
       return this.filtered.length;
-    },
+    }
   },
   methods: {
     changeOrder(order) {
       console.log("Shop : methods : changeOrder() : ", order);
+      this.order = order;
+      this.filtered.sort((a, b) => {
+        if (order === "Latest") {
+          return a._id > b._id ? 1 : -1;
+        } else {
+          return order === "Lowest" ? a.price - b.price : b.price - a.price;
+        }
+      });
     },
     changeSize(size) {
       console.log("Shop : methods : changeSize() : ", size);
+      this.size = size;
       this.filtered = this.products.filter((product) => size === "All" || product.availableSizes.includes(size));
-    },
-  },
+      this.changeOrder(this.order);
+    }
+  }
 };
 </script>
 
