@@ -6,8 +6,8 @@
     <main>
       <div class="content">
         <div class="main">
-          <Filters />
-          <Products :products="products" />
+          <Filters :productsCount="productsCount" @changeOrder="changeOrder" @changeSize="changeSize" />
+          <Products :products="filtered" />
         </div>
         <div class="sidebar">
           sidebar
@@ -27,11 +27,28 @@ export default {
   data() {
     return {
       products: data.products,
+      filtered: data.products,
+      order: "Latest",
+      size: "All",
     };
   },
   components: {
     Filters,
     Products,
+  },
+  computed: {
+    productsCount() {
+      return this.filtered.length;
+    },
+  },
+  methods: {
+    changeOrder(order) {
+      console.log("Shop : methods : changeOrder() : ", order);
+    },
+    changeSize(size) {
+      console.log("Shop : methods : changeSize() : ", size);
+      this.filtered = this.products.filter((product) => size === "All" || product.availableSizes.includes(size));
+    },
   },
 };
 </script>
