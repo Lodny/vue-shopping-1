@@ -7,12 +7,15 @@
       <div class="content">
         <div class="main">
           <Filters :productsCount="productsCount" @changeOrder="changeOrder" @changeSize="changeSize" />
-          <Products :products="filtered" @addToCart="addToCart" />
+          <Products :products="filtered" @addToCart="addToCart" @modalProduct="modalProduct" />
         </div>
         <div class="sidebar">
           <Cart :inCart="inCart" @removeInCart="removeInCart" />
         </div>
       </div>
+      <!-- <Modal v-if="isModalViewed" @close-modal="isModalViewed = false">
+
+      </Modal> -->
     </main>
     <footer>All right is reserved.</footer>
   </div>
@@ -80,6 +83,10 @@ export default {
       console.log("Shop : methods : removeInCart() : ", removeItem);
       const cartItems = this.inCart.filter((item) => item._id !== removeItem._id);
       this.inCart = cartItems;
+    },
+    modalProduct(product) {
+      console.log("Shop : methods : modalProduct() : ", product);
+      // this.$emit("modalProduct", product);
     },
   },
 };
