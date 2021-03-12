@@ -1,7 +1,7 @@
 <template>
   <ul class="products">
     <li v-for="product in products" :key="product._id">
-      <Product :product="product" />
+      <Product :product="product" @addToCart="addToCart" />
     </li>
   </ul>
 </template>
@@ -15,12 +15,18 @@ export default {
   },
   props: {
     products: {
-      type: Object,
+      type: Array,
       required: true,
     },
   },
   data() {
     return {};
+  },
+  methods: {
+    addToCart(product) {
+      console.log("Products : methods : addToCart() : ", product);
+      this.$emit("addToCart", product);
+    },
   },
 };
 </script>

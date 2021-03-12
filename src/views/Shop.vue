@@ -7,10 +7,10 @@
       <div class="content">
         <div class="main">
           <Filters :productsCount="productsCount" @changeOrder="changeOrder" @changeSize="changeSize" />
-          <Products :products="filtered" />
+          <Products :products="filtered" @addToCart="addToCart" />
         </div>
         <div class="sidebar">
-          <Cart />
+          <Cart :inCart="inCart" @removeInCart="removeInCart" />
         </div>
       </div>
     </main>
@@ -28,20 +28,22 @@ export default {
   components: {
     Filters,
     Products,
-    Cart
+    Cart,
   },
   data() {
     return {
       products: data.products,
       filtered: data.products,
       order: "Latest",
-      size: "All"
+      size: "All",
+
+      inCart: [],
     };
   },
   computed: {
     productsCount() {
       return this.filtered.length;
-    }
+    },
   },
   methods: {
     changeOrder(order) {
@@ -60,8 +62,26 @@ export default {
       this.size = size;
       this.filtered = this.products.filter((product) => size === "All" || product.availableSizes.includes(size));
       this.changeOrder(this.order);
-    }
-  }
+    },
+    addToCart(newItem) {
+      console.log("Shop : methods : addToCart() : ", newItem);
+      const cartItems = [...this.inCart];
+      const item = cartItems.find((item) => item._id === newItem._id);
+      if (item) {
+        console.log("Shop : methods : addToCart() : item : ", item);
+        item.count++;
+        this.inCart = cartItems;
+      } else {
+        newItem.count = 1;
+        this.inCart = [...cartItems, newItem];
+      }
+    },
+    removeInCart(removeItem) {
+      console.log("Shop : methods : removeInCart() : ", removeItem);
+      const cartItems = this.inCart.filter((item) => item._id !== removeItem._id);
+      this.inCart = cartItems;
+    },
+  },
 };
 </script>
 

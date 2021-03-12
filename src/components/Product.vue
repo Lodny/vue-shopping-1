@@ -6,7 +6,7 @@
     </a>
     <div class="product-price">
       <div>{{ formatCurrency }}</div>
-      <button class="button primary">Add to Cart</button>
+      <button class="button primary" @click="addToCart(product)">Add to Cart</button>
     </div>
   </div>
 </template>
@@ -31,6 +31,12 @@ export default {
           .toLocaleString() +
         " "
       );
+    },
+  },
+  methods: {
+    addToCart(product) {
+      console.log("Product : methods : addToCart() : ", product);
+      this.$emit("addToCart", product);
     },
   },
 };
