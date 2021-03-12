@@ -1,23 +1,56 @@
 <template>
-  <div class="product">
-    <a :href="formatHref">
+  <Modal v-if="showModal" @close-modal="showModal = false">
+    <div class="product-details">
+      <img :src="product.image" :alt="product.title" />
+      <div class="product-details-description">
+        <p>
+          <strong>{{ product.title }}</strong>
+        </p>
+        <p>{{ product.description }}</p>
+        <p>
+          Available Sizes
+          <span v-for="size in product.availableSizes" :key="size">
+            {{ " " }}
+            <button class="button">{{ size }}</button>
+          </span>
+        </p>
+        <div class="product-price">
+          <div>{{ formatCurrency }}</div>
+          <button class="button primary" @click="addToCart">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </Modal>
+
+  <div v-else class="product">
+    <a :href="formatHref" @click="modalProduct">
       <img :src="product.image" />
       <p>{{ product.title }}</p>
     </a>
     <div class="product-price">
       <div>{{ formatCurrency }}</div>
-      <button class="button primary" @click="addToCart(product)">Add to Cart</button>
+      <button class="button primary" @click="addToCart">Add to Cart</button>
     </div>
   </div>
 </template>
 
 <script>
+import Modal from "./Modal";
+
 export default {
+  components: { Modal },
   props: {
     product: {
       type: Object,
       required: true,
     },
+  },
+  data() {
+    return {
+      showModal: false,
+    };
   },
   computed: {
     formatHref() {
@@ -32,11 +65,19 @@ export default {
         " "
       );
     },
+    sizeInfo() {
+      return `Available Sizes [${this.product.availableSizes.map((size) => "  " + size + " ")}]`;
+    },
   },
   methods: {
-    addToCart(product) {
-      console.log("Product : methods : addToCart() : ", product);
-      this.$emit("addToCart", product);
+    addToCart() {
+      console.log("Product : methods : addToCart() : ");
+      this.$emit("addToCart", this.product);
+    },
+    modalProduct() {
+      console.log("Product : methods : modalProduct() : ");
+      this.showModal = true;
+      // this.$emit("modalProduct", this.product);
     },
   },
 };
@@ -88,5 +129,31 @@ export default {
 
 a {
   text-decoration: none;
+}
+
+/* Product Details */
+.product-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-height: 96vh;
+}
+
+.product-details img {
+  max-height: 100vh;
+  max-width: 45rem;
+  margin: 0 auto;
+}
+
+.product-details-description {
+  flex: 1 1;
+  margin: 1rem;
+}
+
+.close-modal {
+  position: absolute;
+  right: 1rem;
+  top: 2.5rem;
+  z-index: 1000;
 }
 </style>
