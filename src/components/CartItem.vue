@@ -18,19 +18,19 @@ export default {
   props: {
     item: {
       type: Object,
-      required: true,
+      required: true
     },
     itemCount: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
     priceInfo() {
       console.log("CartItem : computed : priceInfo() : ", this.item.count);
       // return `${this.item.price} x ${this.item.count}`;
       return `${this.formatCurrency(this.item.price)} x ${this.itemCount}`;
-    },
+    }
   },
   methods: {
     removeInCart() {
@@ -45,8 +45,8 @@ export default {
           .toLocaleString() +
         " "
       );
-    },
-  },
+    }
+  }
 };
 </script>
 

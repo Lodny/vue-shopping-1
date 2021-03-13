@@ -1,7 +1,11 @@
 <template>
   <ul class="products">
     <li v-for="product in products" :key="product._id">
-      <Product :product="product" @addToCart="addToCart" @modalProduct="modalProduct" />
+      <Product
+        :product="product"
+        @addToCart="addToCart"
+        @modalProduct="modalProduct"
+      />
     </li>
   </ul>
 </template>
@@ -11,13 +15,13 @@ import Product from "./Product";
 
 export default {
   components: {
-    Product,
+    Product
   },
   props: {
     products: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {};
@@ -30,8 +34,8 @@ export default {
     modalProduct(product) {
       console.log("Products : methods : modalProduct() : ", product);
       this.$emit("modalProduct", product);
-    },
-  },
+    }
+  }
 };
 </script>
 

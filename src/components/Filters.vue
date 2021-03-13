@@ -10,7 +10,9 @@
     <div>
       Filter
       <select @change="changeSize">
-        <option v-for="size in sizes" :key="size" :value="size">{{ size }} </option>
+        <option v-for="size in sizes" :key="size" :value="size"
+          >{{ size }}
+        </option>
       </select>
     </div>
   </div>
@@ -21,13 +23,13 @@ export default {
   props: {
     productsCount: {
       type: Number,
-      require: true,
-    },
+      require: true
+    }
   },
   data() {
     return {
       orders: ["Latest", "Lowest", "Highest"],
-      sizes: ["All", "XS", "S", "M", "L", "XL", "XXL"],
+      sizes: ["All", "XS", "S", "M", "L", "XL", "XXL"]
     };
   },
   methods: {
@@ -40,8 +42,8 @@ export default {
       console.log("Filter ; methods : changeSize() : ", e);
       console.log("Filter ; methods : changeSize() : ", e.target.value);
       this.$emit("changeSize", e.target.value);
-    },
-  },
+    }
+  }
 };
 </script>
 
