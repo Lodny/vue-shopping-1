@@ -1,11 +1,8 @@
 <template>
   <ul class="products">
     <li v-for="product in products" :key="product._id">
-      <Product
-        :product="product"
-        @addToCart="addToCart"
-        @modalProduct="modalProduct"
-      />
+      <Product :product="product" />
+      <!-- <Product :product="product" @addToCart="addToCart" @modalProduct="modalProduct" /> -->
     </li>
   </ul>
 </template>
@@ -17,24 +14,29 @@ export default {
   components: {
     Product
   },
-  props: {
-    products: {
-      type: Array,
-      required: true
+  // props: {
+  //   products: {
+  //     type: Array,
+  //     required: true
+  //   }
+  // },
+  // data() {
+  //   return {};
+  // },
+  computed: {
+    products() {
+      return this.$store.state.PRODUCTS.filtered;
     }
-  },
-  data() {
-    return {};
   },
   methods: {
-    addToCart(product) {
-      console.log("Products : methods : addToCart() : ", product);
-      this.$emit("addToCart", product);
-    },
-    modalProduct(product) {
-      console.log("Products : methods : modalProduct() : ", product);
-      this.$emit("modalProduct", product);
-    }
+    // addToCart(product) {
+    //   console.log("Products : methods : addToCart() : ", product);
+    //   this.$emit("addToCart", product);
+    // },
+    // modalProduct(product) {
+    //   console.log("Products : methods : modalProduct() : ", product);
+    //   this.$emit("modalProduct", product);
+    // }
   }
 };
 </script>

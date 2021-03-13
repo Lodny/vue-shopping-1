@@ -10,9 +10,7 @@
     <div>
       Filter
       <select @change="changeSize">
-        <option v-for="size in sizes" :key="size" :value="size"
-          >{{ size }}
-        </option>
+        <option v-for="size in sizes" :key="size" :value="size">{{ size }} </option>
       </select>
     </div>
   </div>
@@ -20,28 +18,35 @@
 
 <script>
 export default {
-  props: {
-    productsCount: {
-      type: Number,
-      require: true
-    }
-  },
+  // props: {
+  //   productsCount: {
+  //     type: Number,
+  //     require: true
+  //   }
+  // },
   data() {
     return {
       orders: ["Latest", "Lowest", "Highest"],
       sizes: ["All", "XS", "S", "M", "L", "XL", "XXL"]
     };
   },
+  computed: {
+    productsCount() {
+      return this.$store.getters["PRODUCTS/filteredCount"];
+    }
+  },
   methods: {
     changeOrder(e) {
       console.log("Filter ; methods : changeOrder() : ", e);
       console.log("Filter ; methods : changeOrder() : ", e.target.value);
-      this.$emit("changeOrder", e.target.value);
+      // this.$emit("changeOrder", e.target.value);
+      this.$store.dispatch("PRODUCTS/changeOrder", e.target.value);
     },
     changeSize(e) {
       console.log("Filter ; methods : changeSize() : ", e);
       console.log("Filter ; methods : changeSize() : ", e.target.value);
-      this.$emit("changeSize", e.target.value);
+      // this.$emit("changeSize", e.target.value);
+      this.$store.dispatch("PRODUCTS/changeSize", e.target.value);
     }
   }
 };
