@@ -1,12 +1,63 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> | <router-link to="/about">About</router-link> |
-      <router-link to="/shop">Shop</router-link>
-    </div>
-    <router-view />
-  </div>
+  <v-app>
+    <v-app-bar app color="primary" dark>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+
+      <v-spacer></v-spacer>
+    </v-app-bar>
+
+    <v-navigation-drawer v-model="drawer" app>
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="title">
+            Application
+          </v-list-item-title>
+          <v-list-item-subtitle>
+            subtext
+          </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider></v-divider>
+
+      <v-list dense nav>
+        <v-list-item v-for="item in items" :key="item.title" link :to="item.to">
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-main>
+      <v-container fluid>
+        <router-view />
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
+
+<script>
+export default {
+  name: "App",
+
+  components: {},
+
+  data: () => ({
+    drawer: false,
+    items: [
+      { title: "Home", icon: "mdi-view-dashboard", to: "/" },
+      { title: "About", icon: "mdi-help-box", to: "/about" },
+      { title: "Shop", icon: "mdi-image", to: "/shop" }
+    ],
+    right: null
+  })
+};
+</script>
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
@@ -19,7 +70,7 @@
   color: #2c3e50;
 } */
 html {
-  font-size: 70%;
+  /* font-size: 70%; */
   box-sizing: border-box;
 }
 

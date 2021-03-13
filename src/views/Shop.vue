@@ -31,7 +31,7 @@ export default {
   components: {
     Filters,
     Products,
-    Cart,
+    Cart
   },
   data() {
     return {
@@ -40,13 +40,13 @@ export default {
       order: "Latest",
       size: "All",
 
-      inCart: [],
+      inCart: []
     };
   },
   computed: {
     productsCount() {
       return this.filtered.length;
-    },
+    }
   },
   methods: {
     changeOrder(order) {
@@ -87,8 +87,8 @@ export default {
     modalProduct(product) {
       console.log("Shop : methods : modalProduct() : ", product);
       // this.$emit("modalProduct", product);
-    },
-  },
+    }
+  }
 };
 </script>
 

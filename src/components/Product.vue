@@ -1,5 +1,5 @@
 <template>
-  <Modal v-if="showModal" @close-modal="showModal = false">
+  <!-- <Modal v-if="showModal" @close-modal="showModal = false">
     <div class="product-details">
       <img :src="product.image" :alt="product.title" />
       <div class="product-details-description">
@@ -22,34 +22,37 @@
         </div>
       </div>
     </div>
-  </Modal>
+  </Modal> -->
+  <div>
+    <ProductModal :showModal="showModal" :product="product" @close="showModal = false" @addToCart="addToCart" />
 
-  <div v-else class="product">
-    <a :href="formatHref" @click="modalProduct">
-      <img :src="product.image" />
-      <p>{{ product.title }}</p>
-    </a>
-    <div class="product-price">
-      <div>{{ formatCurrency }}</div>
-      <button class="button primary" @click="addToCart">Add to Cart</button>
+    <div class="product">
+      <a :href="formatHref" @click="modalProduct">
+        <img :src="product.image" />
+        <p>{{ product.title }}</p>
+      </a>
+      <div class="product-price">
+        <div>{{ formatCurrency }}</div>
+        <button class="button primary" @click="addToCart">Add to Cart</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import Modal from "./Modal";
+import ProductModal from "./ProductModal";
 
 export default {
-  components: { Modal },
+  components: { ProductModal },
   props: {
     product: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
-      showModal: false,
+      showModal: false
     };
   },
   computed: {
@@ -67,7 +70,7 @@ export default {
     },
     sizeInfo() {
       return `Available Sizes [${this.product.availableSizes.map((size) => "  " + size + " ")}]`;
-    },
+    }
   },
   methods: {
     addToCart() {
@@ -78,8 +81,8 @@ export default {
       console.log("Product : methods : modalProduct() : ");
       this.showModal = true;
       // this.$emit("modalProduct", this.product);
-    },
-  },
+    }
+  }
 };
 </script>
 

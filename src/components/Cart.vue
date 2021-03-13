@@ -49,29 +49,34 @@ import CartItem from "./CartItem";
 
 export default {
   components: {
-    CartItem,
+    CartItem
   },
   props: {
     inCart: {
       type: Array,
-      require: true,
-    },
+      require: true
+    }
   },
   data() {
     return {
-      isProceed: false,
+      isProceed: false
     };
   },
   computed: {
     headerInfo() {
       console.log("Cart : computed : headerInfo() : ", this.inCart.length);
-      return this.inCart.length > 0 ? `You have ${this.inCart.length} in the cart` : "Cart is empty!";
+      return this.inCart.length > 0
+        ? `You have ${this.inCart.length} in the cart`
+        : "Cart is empty!";
     },
     totalInfo() {
-      const total = this.inCart.reduce((total, item) => (total += item.price * item.count), 0);
+      const total = this.inCart.reduce(
+        (total, item) => (total += item.price * item.count),
+        0
+      );
       console.log("Cart : computed : totalInfo() : ", total);
       return this.formatCurrency(total);
-    },
+    }
   },
   methods: {
     removeInCart(removeItem) {
@@ -93,8 +98,8 @@ export default {
           .toLocaleString() +
         " "
       );
-    },
-  },
+    }
+  }
 };
 </script>
 
