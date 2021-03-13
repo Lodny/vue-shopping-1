@@ -1,5 +1,7 @@
 <template>
   <div>
+    <OrderModal :showModal="showModal" :orderItems="inCart" :order="order" @close="showModal = false" />
+
     <div class="cart-header">
       {{ headerInfo }}
     </div>
@@ -25,15 +27,15 @@
         <ul class="form-container">
           <li>
             <label for="email">EMail</label>
-            <input id="email" name="email" type="text" required />
+            <input id="email" name="email" type="text" v-model="email" required />
           </li>
           <li>
             <label for="name">Name</label>
-            <input id="name" name="name" type="text" required />
+            <input id="name" name="name" type="text" v-model="name" required />
           </li>
           <li>
             <label for="address">Address</label>
-            <input id="address" name="address" type="text" required />
+            <input id="address" name="address" type="text" v-model="address" required />
           </li>
           <li>
             <button type="submit" class="button primary">Checkout</button>
@@ -46,10 +48,12 @@
 
 <script>
 import CartItem from "./CartItem";
+import OrderModal from "./OrderModal";
 
 export default {
   components: {
-    CartItem
+    CartItem,
+    OrderModal
   },
   props: {
     inCart: {
@@ -59,21 +63,21 @@ export default {
   },
   data() {
     return {
-      isProceed: false
+      isProceed: false,
+      email: "",
+      name: "",
+      address: "",
+      order: {},
+      showModal: false
     };
   },
   computed: {
     headerInfo() {
       console.log("Cart : computed : headerInfo() : ", this.inCart.length);
-      return this.inCart.length > 0
-        ? `You have ${this.inCart.length} in the cart`
-        : "Cart is empty!";
+      return this.inCart.length > 0 ? `You have ${this.inCart.length} in the cart` : "Cart is empty!";
     },
     totalInfo() {
-      const total = this.inCart.reduce(
-        (total, item) => (total += item.price * item.count),
-        0
-      );
+      const total = this.inCart.reduce((total, item) => (total += item.price * item.count), 0);
       console.log("Cart : computed : totalInfo() : ", total);
       return this.formatCurrency(total);
     }
@@ -89,6 +93,18 @@ export default {
     },
     createOrder() {
       console.log("Cart : methods : createOrder() : ");
+
+      this.order = {
+        _id: Date.now(),
+        email: this.email,
+        name: this.name,
+        address: this.address,
+        total: this.totalInfo,
+        createdAt: Date(),
+        items: this.inCart
+      };
+      console.log("Cart : methods : createOrder() : ", this.order.createdAt);
+      this.showModal = true;
     },
     formatCurrency(price) {
       return (

@@ -20,7 +20,7 @@
             Add to Cart
           </button>
         </div>
-      </div>
+      </div> 
     </div>
   </Modal> -->
   <div>
@@ -69,7 +69,7 @@ export default {
       );
     },
     sizeInfo() {
-      return `Available Sizes [${this.product.availableSizes.map((size) => "  " + size + " ")}]`;
+      return `Available Sizes [${this.product.availableSizes.map(size => "  " + size + " ")}]`;
     }
   },
   methods: {
