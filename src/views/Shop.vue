@@ -6,16 +6,16 @@
     <main>
       <div class="content">
         <div class="main">
-          <Filters :productsCount="productsCount" @changeOrder="changeOrder" @changeSize="changeSize" />
-          <Products :products="filtered" @addToCart="addToCart" @modalProduct="modalProduct" />
+          <Filters />
+          <!-- <Filters :productsCount="productsCount" @changeOrder="changeOrder" @changeSize="changeSize" /> -->
+          <Products />
+          <!-- <Products :products="filtered" @addToCart="addToCart" /> -->
         </div>
         <div class="sidebar">
-          <Cart :inCart="inCart" @removeInCart="removeInCart" />
+          <Cart />
+          <!-- <Cart :inCart="inCart" @removeInCart="removeInCart" /> -->
         </div>
       </div>
-      <!-- <Modal v-if="isModalViewed" @close-modal="isModalViewed = false">
-
-      </Modal> -->
     </main>
     <footer>All right is reserved.</footer>
   </div>
@@ -25,70 +25,65 @@
 import Filters from "@/components/Filters";
 import Products from "@/components/Products";
 import Cart from "@/components/Cart";
-import data from "../../data.json";
+// import data from "../../data.json";
 
 export default {
   components: {
     Filters,
     Products,
     Cart
-  },
-  data() {
-    return {
-      products: data.products,
-      filtered: data.products,
-      order: "Latest",
-      size: "All",
-
-      inCart: []
-    };
-  },
-  computed: {
-    productsCount() {
-      return this.filtered.length;
-    }
-  },
-  methods: {
-    changeOrder(order) {
-      console.log("Shop : methods : changeOrder() : ", order);
-      this.order = order;
-      this.filtered.sort((a, b) => {
-        if (order === "Latest") {
-          return a._id > b._id ? 1 : -1;
-        } else {
-          return order === "Lowest" ? a.price - b.price : b.price - a.price;
-        }
-      });
-    },
-    changeSize(size) {
-      console.log("Shop : methods : changeSize() : ", size);
-      this.size = size;
-      this.filtered = this.products.filter((product) => size === "All" || product.availableSizes.includes(size));
-      this.changeOrder(this.order);
-    },
-    addToCart(newItem) {
-      console.log("Shop : methods : addToCart() : ", newItem);
-      const cartItems = [...this.inCart];
-      const item = cartItems.find((item) => item._id === newItem._id);
-      if (item) {
-        console.log("Shop : methods : addToCart() : item : ", item);
-        item.count++;
-        this.inCart = cartItems;
-      } else {
-        newItem.count = 1;
-        this.inCart = [...cartItems, newItem];
-      }
-    },
-    removeInCart(removeItem) {
-      console.log("Shop : methods : removeInCart() : ", removeItem);
-      const cartItems = this.inCart.filter((item) => item._id !== removeItem._id);
-      this.inCart = cartItems;
-    },
-    modalProduct(product) {
-      console.log("Shop : methods : modalProduct() : ", product);
-      // this.$emit("modalProduct", product);
-    }
   }
+  // data() {
+  //   return {
+  //     products: data.products,
+  //     filtered: data.products,
+  //     order: "Latest",
+  //     size: "All"
+  //     inCart: []
+  //   };
+  // },
+  // computed: {
+  //   productsCount() {
+  //     return this.filtered.length;
+  //   }
+  // },
+  // methods: {
+  // changeOrder(order) {
+  //   console.log("Shop : methods : changeOrder() : ", order);
+  //   this.order = order;
+  //   this.filtered.sort((a, b) => {
+  //     if (order === "Latest") {
+  //       return a._id > b._id ? 1 : -1;
+  //     } else {
+  //       return order === "Lowest" ? a.price - b.price : b.price - a.price;
+  //     }
+  //   });
+  // }
+  // changeSize(size) {
+  //   console.log("Shop : methods : changeSize() : ", size);
+  //   this.size = size;
+  //   this.filtered = this.products.filter(product => size === "All" || product.availableSizes.includes(size));
+  //   this.changeOrder(this.order);
+  // }
+  // addToCart(newItem) {
+  //   console.log("Shop : methods : addToCart() : ", newItem);
+  //   const cartItems = [...this.inCart];
+  //   const item = cartItems.find(item => item._id === newItem._id);
+  //   if (item) {
+  //     console.log("Shop : methods : addToCart() : item : ", item);
+  //     item.count++;
+  //     this.inCart = cartItems;
+  //   } else {
+  //     newItem.count = 1;
+  //     this.inCart = [...cartItems, newItem];
+  //   }
+  // },
+  // removeInCart(removeItem) {
+  //   console.log("Shop : methods : removeInCart() : ", removeItem);
+  //   const cartItems = this.inCart.filter(item => item._id !== removeItem._id);
+  //   this.inCart = cartItems;
+  // }
+  // }
 };
 </script>
 

@@ -14,12 +14,15 @@
 </template>
 
 <script>
+import { addCurrency } from "../util";
+
 export default {
   props: {
     item: {
       type: Object,
       required: true
     },
+    // for reredering
     itemCount: {
       type: Number,
       required: true
@@ -29,23 +32,25 @@ export default {
     priceInfo() {
       console.log("CartItem : computed : priceInfo() : ", this.item.count);
       // return `${this.item.price} x ${this.item.count}`;
-      return `${this.formatCurrency(this.item.price)} x ${this.itemCount}`;
+      // return `${addCurrency(this.item.price)} x ${this.item.count}`;
+      return `${addCurrency(this.item.price)} x ${this.itemCount}`;
     }
   },
   methods: {
     removeInCart() {
       console.log("CartItem : methods : removeInCart() : ");
-      this.$emit("removeInCart", this.item);
-    },
-    formatCurrency(price) {
-      return (
-        "$" +
-        Number(price)
-          .toFixed(1)
-          .toLocaleString() +
-        " "
-      );
+      // this.$emit("removeInCart", this.item);
+      this.$store.dispatch("CART/removeInCart", this.item);
     }
+    // formatCurrency(price) {
+    //   return (
+    //     "$" +
+    //     Number(price)
+    //       .toFixed(1)
+    //       .toLocaleString() +
+    //     " "
+    //   );
+    // }
   }
 };
 </script>

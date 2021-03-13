@@ -1,19 +1,14 @@
 <template>
   <div>
-    <OrderModal :showModal="showModal" :orderItems="inCart" :order="order" @close="showModal = false" />
+    <OrderModal :showModal="showModal" :order="order" @close="showModal = false" />
 
     <div class="cart-header">
       {{ headerInfo }}
     </div>
     <div class="cart">
       <ul class="cart-items">
-        <CartItem
-          v-for="item in inCart"
-          :key="item._id"
-          :item="item"
-          :itemCount="item.count"
-          @removeInCart="removeInCart"
-        />
+        <CartItem v-for="item in inCart" :key="item._id" :item="item" :itemCount="item.count" />
+        <!-- @removeInCart="removeInCart" -->
       </ul>
     </div>
     <div class="total" v-if="inCart.length">
@@ -49,18 +44,19 @@
 <script>
 import CartItem from "./CartItem";
 import OrderModal from "./OrderModal";
+import { addCurrency } from "../util";
 
 export default {
   components: {
     CartItem,
     OrderModal
   },
-  props: {
-    inCart: {
-      type: Array,
-      require: true
-    }
-  },
+  // props: {
+  //   inCart: {
+  //     type: Array,
+  //     require: true
+  //   }
+  // },
   data() {
     return {
       isProceed: false,
@@ -72,6 +68,9 @@ export default {
     };
   },
   computed: {
+    inCart() {
+      return this.$store.state.CART.inCart;
+    },
     headerInfo() {
       console.log("Cart : computed : headerInfo() : ", this.inCart.length);
       return this.inCart.length > 0 ? `You have ${this.inCart.length} in the cart` : "Cart is empty!";
@@ -79,14 +78,15 @@ export default {
     totalInfo() {
       const total = this.inCart.reduce((total, item) => (total += item.price * item.count), 0);
       console.log("Cart : computed : totalInfo() : ", total);
-      return this.formatCurrency(total);
+      return addCurrency(total);
+      // return this.formatCurrency(total);
     }
   },
   methods: {
-    removeInCart(removeItem) {
-      console.log("Cart : methods : removeInCart() : ", removeItem);
-      this.$emit("removeInCart", removeItem);
-    },
+    // removeInCart(removeItem) {
+    //   console.log("Cart : methods : removeInCart() : ", removeItem);
+    //   this.$emit("removeInCart", removeItem);
+    // },
     preceedInCart() {
       console.log("Cart : methods : preceedInCart() : ");
       this.isProceed = true;
@@ -105,16 +105,16 @@ export default {
       };
       console.log("Cart : methods : createOrder() : ", this.order.createdAt);
       this.showModal = true;
-    },
-    formatCurrency(price) {
-      return (
-        "$" +
-        Number(price)
-          .toFixed(1)
-          .toLocaleString() +
-        " "
-      );
     }
+    // formatCurrency(price) {
+    //   return (
+    //     "$" +
+    //     Number(price)
+    //       .toFixed(1)
+    //       .toLocaleString() +
+    //     " "
+    //   );
+    // }
   }
 };
 </script>

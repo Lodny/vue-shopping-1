@@ -76,13 +76,6 @@ export default {
         }
       }
     }
-  },
-  methods: {
-    // addToCart() {
-    //   console.log("Modal : methods : addToCart() ");
-    //   this.dialog = false;
-    //   this.$emit("addToCart");
-    // }
   }
 };
 </script>

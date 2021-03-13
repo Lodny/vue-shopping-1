@@ -24,7 +24,8 @@
     </div>
   </Modal> -->
   <div>
-    <ProductModal :showModal="showModal" :product="product" @close="showModal = false" @addToCart="addToCart" />
+    <ProductModal :showModal="showModal" :product="product" @close="showModal = false" />
+    <!-- <ProductModal :showModal="showModal" :product="product" @close="showModal = false" @addToCart="addToCart" /> -->
 
     <div class="product">
       <a :href="formatHref" @click="modalProduct">
@@ -32,6 +33,7 @@
         <p>{{ product.title }}</p>
       </a>
       <div class="product-price">
+        <!-- <div>{{ formatCurrency(product.price) }}</div> -->
         <div>{{ formatCurrency }}</div>
         <button class="button primary" @click="addToCart">Add to Cart</button>
       </div>
@@ -41,6 +43,7 @@
 
 <script>
 import ProductModal from "./ProductModal";
+import { addCurrency } from "../util";
 
 export default {
   components: { ProductModal },
@@ -60,13 +63,7 @@ export default {
       return "#" + this.product._id;
     },
     formatCurrency() {
-      return (
-        "$" +
-        Number(this.product.price)
-          .toFixed(1)
-          .toLocaleString() +
-        " "
-      );
+      return addCurrency(this.product.price);
     },
     sizeInfo() {
       return `Available Sizes [${this.product.availableSizes.map(size => "  " + size + " ")}]`;
@@ -75,12 +72,12 @@ export default {
   methods: {
     addToCart() {
       console.log("Product : methods : addToCart() : ");
-      this.$emit("addToCart", this.product);
+      this.$store.dispatch("CART/addToCart", this.product);
+      // this.$emit("addToCart", this.product);
     },
     modalProduct() {
       console.log("Product : methods : modalProduct() : ");
       this.showModal = true;
-      // this.$emit("modalProduct", this.product);
     }
   }
 };

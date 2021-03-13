@@ -16,8 +16,7 @@
             </span>
           </p>
           <div class="product-price">
-            <!-- <div>{{ formatCurrency }}</div> -->
-            <div>{{ product.price }}</div>
+            <div>{{ formatCurrency }}</div>
             <button class="button primary" @click="addToCart">
               Add to Cart
             </button>
@@ -60,6 +59,8 @@
 </template>
 
 <script>
+import { addCurrency } from "../util";
+
 export default {
   props: {
     showModal: {
@@ -81,6 +82,9 @@ export default {
           this.$emit("close");
         }
       }
+    },
+    formatCurrency() {
+      return addCurrency(this.product.price);
     }
   },
   data() {
@@ -92,7 +96,8 @@ export default {
     addToCart() {
       console.log("Modal : methods : addToCart() ");
       this.dialog = false;
-      this.$emit("addToCart");
+      // this.$emit("addToCart");
+      this.$store.dispatch("CART/addToCart", this.product);
     }
   }
 };
