@@ -47,3 +47,7 @@
     </v-card>
   </v-container>
 </template>
+
+<script>
+// import { mdiEmail } from "@mdi/js";
+</script>

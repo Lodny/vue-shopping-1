@@ -16,7 +16,7 @@
             </span>
           </p>
           <div class="product-price">
-            <div>{{ formatCurrency }}</div>
+            <div>{{ addCurrency(product.price) }}</div>
             <button class="button primary" @click="addToCart">
               Add to Cart
             </button>
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { addCurrency } from "../util";
+import { currency } from "@/mixins/currency";
 
 export default {
   props: {
@@ -82,10 +82,10 @@ export default {
           this.$emit("close");
         }
       }
-    },
-    formatCurrency() {
-      return addCurrency(this.product.price);
     }
+    // formatCurrency() {
+    //   return addCurrency(this.product.price);
+    // }
   },
   data() {
     return {
@@ -99,7 +99,8 @@ export default {
       // this.$emit("addToCart");
       this.$store.dispatch("CART/addToCart", this.product);
     }
-  }
+  },
+  mixins: [currency]
 };
 </script>
 

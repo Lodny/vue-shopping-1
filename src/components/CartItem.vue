@@ -7,14 +7,19 @@
       <div>{{ item.title }}</div>
       <div class="right">
         {{ priceInfo }}
-        <button class="button" @click="removeInCart">Remove</button>
+        <v-btn class="blue white--text" @click="removeInCart(item)">
+          <v-icon left>mdi-cart-off</v-icon>
+          <span>Remove</span>
+        </v-btn>
+        <!-- <button class="button" @click="removeInCart(item)">Remove</button> -->
       </div>
     </div>
   </li>
 </template>
 
 <script>
-import { addCurrency } from "../util";
+import { mapActions } from "vuex";
+import { currency } from "@/mixins/currency";
 
 export default {
   props: {
@@ -33,15 +38,16 @@ export default {
       console.log("CartItem : computed : priceInfo() : ", this.item.count);
       // return `${this.item.price} x ${this.item.count}`;
       // return `${addCurrency(this.item.price)} x ${this.item.count}`;
-      return `${addCurrency(this.item.price)} x ${this.itemCount}`;
+      return `${this.addCurrency(this.item.price)} x ${this.itemCount}`;
     }
   },
   methods: {
-    removeInCart() {
-      console.log("CartItem : methods : removeInCart() : ");
-      // this.$emit("removeInCart", this.item);
-      this.$store.dispatch("CART/removeInCart", this.item);
-    }
+    ...mapActions("CART", ["removeInCart"])
+    // removeInCart() {
+    //   console.log("CartItem : methods : removeInCart() : ");
+    //   // this.$emit("removeInCart", this.item);
+    //   this.$store.dispatch("CART/removeInCart", this.item);
+    // }
     // formatCurrency(price) {
     //   return (
     //     "$" +
@@ -51,7 +57,8 @@ export default {
     //     " "
     //   );
     // }
-  }
+  },
+  mixins: [currency]
 };
 </script>
 

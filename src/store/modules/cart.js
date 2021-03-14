@@ -33,6 +33,7 @@ export default {
     }
   },
   getters: {
-    // numberInCart: state => state.inCart.length
+    inCart: state => state.inCart
+    // countInCart: state => state.inCart.length
   }
 };

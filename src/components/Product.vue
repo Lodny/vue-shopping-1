@@ -28,14 +28,19 @@
     <!-- <ProductModal :showModal="showModal" :product="product" @close="showModal = false" @addToCart="addToCart" /> -->
 
     <div class="product">
-      <a :href="formatHref" @click="modalProduct">
+      <a :href="'#' + product._id" @click="modalProduct">
         <img :src="product.image" />
         <p>{{ product.title }}</p>
       </a>
       <div class="product-price">
         <!-- <div>{{ formatCurrency(product.price) }}</div> -->
-        <div>{{ formatCurrency }}</div>
-        <button class="button primary" @click="addToCart">Add to Cart</button>
+        <div>{{ addCurrency(product.price) }}</div>
+        <!-- <div>{{ formatCurrency }}</div> -->
+        <v-btn rounded x-large color="primary" @click="addToCart(product)">
+          <span>Add to Cart - </span>
+          <v-icon large right>mdi-cart-arrow-down</v-icon>
+        </v-btn>
+        <!-- <button class="button primary" @click="addToCart(product)">Add to Cart</button> -->
       </div>
     </div>
   </div>
@@ -43,7 +48,8 @@
 
 <script>
 import ProductModal from "./ProductModal";
-import { addCurrency } from "../util";
+import { mapActions } from "vuex";
+import { currency } from "@/mixins/currency";
 
 export default {
   components: { ProductModal },
@@ -59,27 +65,26 @@ export default {
     };
   },
   computed: {
-    formatHref() {
-      return "#" + this.product._id;
-    },
-    formatCurrency() {
-      return addCurrency(this.product.price);
-    },
+    // formatCurrency() {
+    //   return addCurrency(this.product.price);
+    // },
     sizeInfo() {
       return `Available Sizes [${this.product.availableSizes.map(size => "  " + size + " ")}]`;
     }
   },
   methods: {
-    addToCart() {
-      console.log("Product : methods : addToCart() : ");
-      this.$store.dispatch("CART/addToCart", this.product);
-      // this.$emit("addToCart", this.product);
-    },
+    ...mapActions("CART", ["addToCart"]),
+    // addToCart() {
+    //   console.log("Product : methods : addToCart() : ");
+    //   this.$store.dispatch("CART/addToCart", this.product);
+    //   // this.$emit("addToCart", this.product);
+    // },
     modalProduct() {
       console.log("Product : methods : modalProduct() : ");
       this.showModal = true;
     }
-  }
+  },
+  mixins: [currency]
 };
 </script>
 

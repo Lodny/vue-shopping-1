@@ -9,6 +9,7 @@ export default {
     size: "All"
   },
   mutations: {
+    // can not call async
     CHANGE_ORDER(state, order) {
       console.log("products : store : mutations : CHANGE_ORDER() : order : ", order);
       state.order = order;
@@ -28,6 +29,8 @@ export default {
     }
   },
   actions: {
+    // can call async
+    // changeOrder(context, order) {
     changeOrder({ commit }, order) {
       console.log("products : store : actions : changeOrder() : order : ", order);
       setTimeout(() => commit("CHANGE_ORDER", order), 200);
